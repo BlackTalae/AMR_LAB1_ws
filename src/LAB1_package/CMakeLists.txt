@@ -28,6 +28,9 @@ ament_python_install_package(${PROJECT_NAME})
 # Install Python executables
 install(PROGRAMS
   scripts/dummy_script.py
+  scripts/wheel_odom_node.py
+  scripts/EKF_odom_node.py
+  scripts/SLAM_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -48,6 +51,8 @@ install(TARGETS
 ################ INSTALL LAUNCH, ETC #################
 install(DIRECTORY
   # add directories here
+  dataset
+  launch
   DESTINATION share/${PROJECT_NAME})
 
 ament_package()

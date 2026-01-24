@@ -67,7 +67,12 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/LAB1_package" TYPE PROGRAM FILES "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/dummy_script.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/LAB1_package" TYPE PROGRAM FILES
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/dummy_script.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/wheel_odom_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/EKF_odom_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/SLAM_node.py"
+    )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -91,7 +96,10 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE DIRECTORY FILES "")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE DIRECTORY FILES
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/launch"
+    )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

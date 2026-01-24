@@ -1,6 +1,0 @@
-Invoking command in '/home/talae/AMR_LAB1_ws/build/LAB1_package': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/talae/AMR_LAB1_ws/src/LAB1_package -DCMAKE_INSTALL_PREFIX=/home/talae/AMR_LAB1_ws/install/LAB1_package
-Invoked command in '/home/talae/AMR_LAB1_ws/build/LAB1_package' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/talae/AMR_LAB1_ws/src/LAB1_package -DCMAKE_INSTALL_PREFIX=/home/talae/AMR_LAB1_ws/install/LAB1_package
-Invoking command in '/home/talae/AMR_LAB1_ws/build/LAB1_package': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/talae/AMR_LAB1_ws/build/LAB1_package -- -j20 -l20
-Invoked command in '/home/talae/AMR_LAB1_ws/build/LAB1_package' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/talae/AMR_LAB1_ws/build/LAB1_package -- -j20 -l20
-Invoking command in '/home/talae/AMR_LAB1_ws/build/LAB1_package': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/talae/AMR_LAB1_ws/build/LAB1_package
-Invoked command in '/home/talae/AMR_LAB1_ws/build/LAB1_package' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/talae/AMR_LAB1_ws/build/LAB1_package
