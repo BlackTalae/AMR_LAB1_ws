@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Imu, JointState
+from sensor_msgs.msg import JointState
 from nav_msgs.msg import Odometry, Path
 from geometry_msgs.msg import Quaternion, TransformStamped, PoseStamped
 import tf2_ros
@@ -16,68 +16,85 @@ class Wheel_odom_node(Node):
         self.R = 0.066  # wheel radius (meters)
         self.L = 0.16   # wheel base (meters) 
         
-        # Initital State [x, y, theta]
+        # Robot State [x, y, theta]
         self.x = 0.0
         self.y = 0.0
         self.theta = 0.0
         
+        # Last wheel positions
         self.last_left_pos = None
         self.last_right_pos = None
 
+        # History for plotting path at the end
         self.history_x = []
         self.history_y = []
 
-        # --- ส่วนการตั้งค่าสำหรับ Rviz2 ---
-        self.odom_pub = self.create_publisher(Odometry, '/raw_odom', 10)
-        self.path_pub = self.create_publisher(Path, '/robot_path', 10) # Publisher สำหรับเส้น Path
+        # --- Rviz2 Setting ---
+        self.odom_pub = self.create_publisher(Odometry, '/wheel_odom', 10)
+        self.path_pub = self.create_publisher(Path, '/wheel_odom_path', 10)
         self.tf_broadcaster = tf2_ros.TransformBroadcaster(self)
+
+        # Path Base Frame ( Run with SLAM:'map' | Run without SLAM:'odom' )
+        self.path_base_frame = 'map'
         
-        # สร้างตัวแปรเก็บ Path
+        # Creating Path
         self.path_msg = Path()
-        self.path_msg.header.frame_id = 'map'
+        self.path_msg.header.frame_id = self.path_base_frame
         # --------------------------------
 
-        self.create_subscription(Imu, 'imu', self.imu_callback, 10)
+        # Subscription
         self.create_subscription(JointState, 'joint_states', self.joint_states_callback, 10)
 
-        self.timer = self.create_timer(0.05, self.timer_callback)
-
     def joint_states_callback(self, msg: JointState):
+
+        # Check if we have both left and right wheel positions
         if len(msg.position) < 2:
             return
 
+        # Assign current wheel positions
         current_left_pos = msg.position[0]
         current_right_pos = msg.position[1]
 
         if self.last_left_pos is not None:
-            d_left = (current_left_pos - self.last_left_pos) * self.R
-            d_right = (current_right_pos - self.last_right_pos) * self.R
-            
-            d_center = (d_left + d_right) / 2.0
-            d_theta = (d_right - d_left) / self.L
 
-            self.x += d_center * np.cos(self.theta + d_theta/2.0)
-            self.y += d_center * np.sin(self.theta + d_theta/2.0)
-            self.theta += d_theta
+            # Calculate odometry
+            self.wheel_odom_calculate(current_left_pos, current_right_pos)
 
+            # Add current position to history for plotting path at the end
             self.history_x.append(self.x)
             self.history_y.append(self.y)
 
-            # ส่งข้อมูลไป Rviz2 (รวมทั้ง Odom, TF และ Path)
+            # Send data to Rviz2 (Odom, TF and Path)
             self.broadcast_rviz(msg.header.stamp)
 
+        # Update last wheel positions
         self.last_left_pos = current_left_pos
         self.last_right_pos = current_right_pos
 
+    # Calculate diff-drive odometry
+    # Ref: https://automaticaddison.com/calculating-wheel-odometry-for-a-differential-drive-robot/
+    def wheel_odom_calculate(self, current_left_pos, current_right_pos):
+
+        d_left = (current_left_pos - self.last_left_pos) * self.R
+        d_right = (current_right_pos - self.last_right_pos) * self.R
+        
+        d_center = (d_left + d_right) / 2.0
+        d_theta = (d_right - d_left) / self.L
+
+        self.x += d_center * np.cos(self.theta + d_theta / 2.0)
+        self.y += d_center * np.sin(self.theta + d_theta / 2.0)
+        self.theta += d_theta
+
     def broadcast_rviz(self, stamp):
-        # 1. แปลง Yaw (theta) เป็น Quaternion
+
+        # 1. Convert Yaw (theta) to Quaternion
         q = Quaternion()
         q.x = 0.0
         q.y = 0.0
         q.z = np.sin(self.theta / 2.0)
         q.w = np.cos(self.theta / 2.0)
 
-        # 2. ส่ง TF Transform (odom -> base_link)
+        # 2. Send TF Transform (odom -> base_link)
         t = TransformStamped()
         t.header.stamp = stamp
         t.header.frame_id = 'odom'
@@ -87,7 +104,7 @@ class Wheel_odom_node(Node):
         t.transform.rotation = q
         self.tf_broadcaster.sendTransform(t)
 
-        # 3. ส่ง Odometry Message
+        # 3. Send Odometry Message
         odom_msg = Odometry()
         odom_msg.header.stamp = stamp
         odom_msg.header.frame_id = 'odom'
@@ -97,10 +114,10 @@ class Wheel_odom_node(Node):
         odom_msg.pose.pose.orientation = q
         self.odom_pub.publish(odom_msg)
 
-        # 4. ส่ง Path Message (เพิ่มจุดใหม่เข้าไปในเส้นทาง)
+        # 4. Send Path Message
         pose = PoseStamped()
         pose.header.stamp = stamp
-        pose.header.frame_id = 'map'
+        pose.header.frame_id = self.path_base_frame
         pose.pose.position.x = self.x
         pose.pose.position.y = self.y
         pose.pose.orientation = q
@@ -109,16 +126,9 @@ class Wheel_odom_node(Node):
         self.path_msg.poses.append(pose)
         self.path_pub.publish(self.path_msg)
 
-    def imu_callback(self, msg: Imu):
-        pass
-
-    def timer_callback(self):
-        pass
-        # self.get_logger().info(f'Current Pose: x={self.x:.3f}, y={self.y:.3f}, theta={self.theta:.3f}')
-
     def plot_trajectory(self):
         plt.figure(figsize=(8, 8))
-        plt.plot(self.history_x, self.history_y, label='Robot Path (Matplotlib)')
+        plt.plot(self.history_x, self.history_y, label='Robot Path')
         plt.xlabel('X (meters)')
         plt.ylabel('Y (meters)')
         plt.title('Robot 2D Trajectory from Joint States')

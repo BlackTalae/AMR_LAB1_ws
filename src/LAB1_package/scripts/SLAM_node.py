@@ -11,28 +11,24 @@ class SLAMNode(Node):
     def __init__(self):
         super().__init__('slam_node')
 
-        # 1. Static TF สำหรับ LiDAR
+        # 1. Static TF for LiDAR
         self.tf_static_broadcaster = tf2_ros.StaticTransformBroadcaster(self)
         self.make_static_transform(0.029, 0.0, 0.192, 0.0, 'base_link', 'base_scan')
 
-        # 2. ส่วนการรับค่าจาก SLAM และส่ง Path ไป Rviz
-        # โดยปกติ slam_toolbox จะส่งค่ามาที่ /pose (ชนิด PoseWithCovarianceStamped)
-        self.slam_sub = self.create_subscription(
-            PoseWithCovarianceStamped, 
-            '/pose', 
-            self.slam_pose_callback, 
-            10)
+        # 2. Receive pose from SLAM and send Path to Rviz
+        # By default, slam_toolbox sends values to /pose (type PoseWithCovarianceStamped)
+        self.slam_sub = self.create_subscription(PoseWithCovarianceStamped, '/pose', self.slam_pose_callback, 10)
         
-        # Publisher สำหรับแสดงเส้นทาง (Path) ใน Rviz
+        # Publisher for showing the path (Path) in Rviz
         self.slam_path_pub = self.create_publisher(Path, '/slam_path', 10)
         self.slam_path = Path()
-        self.slam_path.header.frame_id = 'map' # SLAM อ้างอิงกับ map เสมอ
+        self.slam_path.header.frame_id = 'map' # SLAM references map always
 
         self.get_logger().info('SLAM Path Node Started')
 
     def make_static_transform(self, x, y, z, yaw, parent_frame, child_frame):
         t = TransformStamped()
-        # ใช้เวลาปัจจุบันของ Sim/Bag
+        # Use current time of Sim/Bag
         t.header.stamp = self.get_clock().now().to_msg()
         t.header.frame_id = parent_frame
         t.child_frame_id = child_frame
@@ -44,20 +40,20 @@ class SLAMNode(Node):
         self.tf_static_broadcaster.sendTransform(t)
 
     def slam_pose_callback(self, msg):
-        """ รับค่าจาก SLAM แล้วสร้างเป็น Path ส่งไป Rviz """
-        # สร้าง PoseStamped สำหรับใส่ใน Path
+        """ Receive pose from SLAM and send Path to Rviz """
+        # Create PoseStamped for inserting into Path
         pose_stamped = PoseStamped()
         pose_stamped.header = msg.header
         pose_stamped.pose = msg.pose.pose
 
-        # เพิ่มตำแหน่งลงในลิสต์ Path
+        # Add position to Path list
         self.slam_path.poses.append(pose_stamped)
         self.slam_path.header.stamp = msg.header.stamp
 
-        # ส่ง Path ออกไป
+        # Send Path
         self.slam_path_pub.publish(self.slam_path)
         
-        # Log ดูค่า x, y เพื่อความแน่ใจ
+        # Log x, y to check
         x = msg.pose.pose.position.x
         y = msg.pose.pose.position.y
         self.get_logger().info(f'SLAM Pose: x={x:.3f}, y={y:.3f}')
