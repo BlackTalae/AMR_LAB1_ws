@@ -72,6 +72,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/wheel_odom_node.py"
     "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/EKF_odom_node.py"
     "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/SLAM_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/ICP_odom_node.py"
     )
 endif()
 

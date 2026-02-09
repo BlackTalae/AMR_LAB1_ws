@@ -13,7 +13,7 @@ class Wheel_odom_node(Node):
         super().__init__('Wheel_odom_node')
 
         # Robot Parameters
-        self.R = 0.066  # wheel radius (meters)
+        self.R = 0.033  # wheel radius (meters)
         self.L = 0.16   # wheel base (meters) 
         
         # Robot State [x, y, theta]
@@ -34,8 +34,8 @@ class Wheel_odom_node(Node):
         self.path_pub = self.create_publisher(Path, '/wheel_odom_path', 10)
         self.tf_broadcaster = tf2_ros.TransformBroadcaster(self)
 
-        # Path Base Frame ( Run with SLAM:'map' | Run without SLAM:'odom' )
-        self.path_base_frame = 'map'
+        # Path Base Frame ( Run with SLAM: 'map' | Run without SLAM: 'odom' )
+        self.path_base_frame = 'odom'
         
         # Creating Path
         self.path_msg = Path()

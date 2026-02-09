@@ -10,6 +10,7 @@
 /home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/wheel_odom_node.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/EKF_odom_node.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/SLAM_node.py
+/home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/ICP_odom_node.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/cpp_node_test
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/dataset/fibo_floor3_seq00/fibo_floor3_seq00_0.db3
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/dataset/fibo_floor3_seq00/metadata.yaml
