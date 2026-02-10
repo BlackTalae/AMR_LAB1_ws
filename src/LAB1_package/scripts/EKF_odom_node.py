@@ -15,13 +15,14 @@ class EKF_Odom_Node(Node):
         # EKF States & Noise
         self.state_ekf = np.zeros((3, 1))      # [x, y, yaw]^T
         self.P = np.eye(3)                      
-        self.Q = np.diag([0.05, 0.05, np.deg2rad(1.0)])**2  
-        self.R_mat = np.diag([np.deg2rad(0.5)])**2         
+        self.Q = np.diag([0.5, 0.5, np.deg2rad(0.001)])**2  
+        self.R_mat = np.diag([np.deg2rad(0.1)])**2         
 
         self.imu_offset = None
 
         # Shared Buffer
         self.latest_imu_yaw = None
+        self.latest_imu_gyro_z = 0.0
 
         # Robot Params
         self.R, self.L = 0.033, 0.16
@@ -47,6 +48,7 @@ class EKF_Odom_Node(Node):
         qos = QoSProfile(reliability=ReliabilityPolicy.BEST_EFFORT, depth=10)
         self.create_subscription(LaserScan, 'scan', self.scan_callback, qos)
         self.scan_pub = self.create_publisher(LaserScan, '/visualize_scan', 10)
+
     # ==========================================
     # EKF CORE FUNCTION (The Only Entry Point)
     # ==========================================
@@ -87,19 +89,17 @@ class EKF_Odom_Node(Node):
     # ==========================================
 
     def scan_callback(self, msg: LaserScan):
-
         scan_to_viz = msg
         scan_to_viz.header.frame_id = 'base_link'
         self.scan_pub.publish(scan_to_viz)
 
-    # def imu_callback(self, msg: Imu):
-    #     """ Save IMU data to Buffer """
-    #     q = msg.orientation
-    #     yaw = np.arctan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
-    #     self.latest_imu_yaw = np.array([[yaw]])
-
     def imu_callback(self, msg: Imu):
-        q = msg.orientation
+
+        # Omega
+        self.latest_imu_gyro_z = msg.angular_velocity.z
+
+        # Theta
+        q = msg.orientation # Quaternion
         raw_yaw = np.arctan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
 
         if self.imu_offset is None:
@@ -124,7 +124,8 @@ class EKF_Odom_Node(Node):
         # 1. Calculate robot speed (Control Input: u)
         d_l = (msg.position[0] - self.last_left_pos) * self.R
         d_r = (msg.position[1] - self.last_right_pos) * self.R
-        v, omega = ((d_l + d_r) / 2.0) / dt, ((d_r - d_l) / self.L) / dt
+        v = ((d_l + d_r) / 2.0) / dt
+        omega = ((d_r - d_l) / self.L) / dt # self.latest_imu_gyro_z
         u = np.array([[v], [omega]])
 
         # 2. Run EKF (Estimate position and correct with IMU)

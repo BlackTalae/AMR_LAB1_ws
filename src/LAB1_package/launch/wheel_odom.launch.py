@@ -4,7 +4,7 @@ from launch.actions import ExecuteProcess, TimerAction
 
 def generate_launch_description():
 
-    dataset_no = 1
+    dataset_no = 0
     dataset_name = f"fibo_floor3_seq0{dataset_no}"
 
     return LaunchDescription([
@@ -14,7 +14,7 @@ def generate_launch_description():
         #     package='LAB1_package',
         #     executable='wheel_odom_node.py',
         #     name='wheel_odom_node',
-        #     parameters=[{'mode': 'all'}],
+        #     parameters=[{'mode': 'velocity'}],
         # ),
 
         Node(
@@ -28,7 +28,7 @@ def generate_launch_description():
             period=1.0,
             actions=[
                 ExecuteProcess(
-                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '20'],
+                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '30'],
                     output='screen'
                 ),
             ]
