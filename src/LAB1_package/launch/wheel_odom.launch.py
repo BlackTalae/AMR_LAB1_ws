@@ -1,22 +1,42 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import ExecuteProcess
+from launch.actions import ExecuteProcess, TimerAction
 
 def generate_launch_description():
+
+    dataset_no = 1
+    dataset_name = f"fibo_floor3_seq0{dataset_no}"
+
     return LaunchDescription([
 
-        # 1. Node EKF ที่คุณเขียนเอง
+        # 1. Node Wheel Odometry
+        # Node(
+        #     package='LAB1_package',
+        #     executable='wheel_odom_node.py',
+        #     name='wheel_odom_node',
+        #     parameters=[{'mode': 'all'}],
+        # ),
+
         Node(
             package='LAB1_package',
-            executable='wheel_odom_node',
-            name='wheel_odom_node',
-            parameters=[{'wheel_radius': 0.05, 'wheel_base': 0.2}]
+            executable='EKF_odom_node.py',
+            name='EKF_odom_node',
+        ),
+
+        # 2. Rosbag
+        TimerAction(
+            period=1.0,
+            actions=[
+                ExecuteProcess(
+                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '20'],
+                    output='screen'
+                ),
+            ]
         ),
         
-        # 2. เล่นไฟล์ Rosbag (ใส่ path ให้ถูก)
+        # 3. RViz2
         ExecuteProcess(
-            cmd=['ros2', 'bag', 'play', 'src/LAB1_package/datasets/fibo_floor3_seq00/fibo_floor3_seq00.db3'],
+            cmd=['ros2', 'run', 'rviz2', 'rviz2', '-d', '/home/talae/AMR_LAB1_ws/src/LAB1_package/config/config.rviz'],
             output='screen'
         ),
-        
     ])

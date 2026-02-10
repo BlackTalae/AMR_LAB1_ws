@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Imu, JointState
-from nav_msgs.msg import Path
-from geometry_msgs.msg import TransformStamped, PoseStamped
+from sensor_msgs.msg import Imu, JointState, LaserScan
+from nav_msgs.msg import Odometry, Path
+from geometry_msgs.msg import Quaternion, TransformStamped, PoseStamped
+from rclpy.qos import QoSProfile, ReliabilityPolicy
 import tf2_ros
 import numpy as np
 
@@ -16,6 +17,8 @@ class EKF_Odom_Node(Node):
         self.P = np.eye(3)                      
         self.Q = np.diag([0.05, 0.05, np.deg2rad(1.0)])**2  
         self.R_mat = np.diag([np.deg2rad(0.5)])**2         
+
+        self.imu_offset = None
 
         # Shared Buffer
         self.latest_imu_yaw = None
@@ -40,6 +43,10 @@ class EKF_Odom_Node(Node):
         self.create_subscription(Imu, 'imu', self.imu_callback, 10)
         self.create_subscription(JointState, 'joint_states', self.joint_states_callback, 10)
 
+        # Visualize by lidar
+        qos = QoSProfile(reliability=ReliabilityPolicy.BEST_EFFORT, depth=10)
+        self.create_subscription(LaserScan, 'scan', self.scan_callback, qos)
+        self.scan_pub = self.create_publisher(LaserScan, '/visualize_scan', 10)
     # ==========================================
     # EKF CORE FUNCTION (The Only Entry Point)
     # ==========================================
@@ -79,11 +86,28 @@ class EKF_Odom_Node(Node):
     # CALLBACKS
     # ==========================================
 
+    def scan_callback(self, msg: LaserScan):
+
+        scan_to_viz = msg
+        scan_to_viz.header.frame_id = 'base_link'
+        self.scan_pub.publish(scan_to_viz)
+
+    # def imu_callback(self, msg: Imu):
+    #     """ Save IMU data to Buffer """
+    #     q = msg.orientation
+    #     yaw = np.arctan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
+    #     self.latest_imu_yaw = np.array([[yaw]])
+
     def imu_callback(self, msg: Imu):
-        """ Save IMU data to Buffer """
         q = msg.orientation
-        yaw = np.arctan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
-        self.latest_imu_yaw = np.array([[yaw]])
+        raw_yaw = np.arctan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
+
+        if self.imu_offset is None:
+            self.imu_offset = raw_yaw # เก็บมุมแรกไว้เป็นค่าอ้างอิง
+
+        # ลบค่าเริ่มต้นออกเพื่อให้เริ่มที่ 0 เสมอ
+        relative_yaw = raw_yaw - self.imu_offset
+        self.latest_imu_yaw = np.array([[relative_yaw]])
 
     def joint_states_callback(self, msg: JointState):
         """ Run EKF every time the wheel moves """

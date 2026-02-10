@@ -54,6 +54,7 @@ install(DIRECTORY
   # add directories here
   dataset
   launch
+  config
   DESTINATION share/${PROJECT_NAME})
 
 ament_package()
