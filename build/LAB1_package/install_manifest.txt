@@ -21,6 +21,7 @@
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/launch/slam.launch.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/launch/wheel_odom.launch.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/config/config.rviz
+/home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/config/slam_config.rviz
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/ament_index/resource_index/package_run_dependencies/LAB1_package
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/ament_index/resource_index/parent_prefix_path/LAB1_package
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/environment/ament_prefix_path.sh

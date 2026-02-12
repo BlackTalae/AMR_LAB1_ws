@@ -4,7 +4,7 @@ from launch.actions import ExecuteProcess, TimerAction
 
 def generate_launch_description():
 
-    dataset_no = 0
+    dataset_no = 1
     dataset_name = f"fibo_floor3_seq0{dataset_no}"
 
     return LaunchDescription([
@@ -17,11 +17,18 @@ def generate_launch_description():
         #     parameters=[{'mode': 'velocity'}],
         # ),
 
+        # Node(
+        #     package='LAB1_package',
+        #     executable='EKF_odom_node.py',
+        #     name='EKF_odom_node',
+        # ),
+
         Node(
             package='LAB1_package',
-            executable='EKF_odom_node.py',
-            name='EKF_odom_node',
+            executable='ICP_odom_node.py',
+            name='ICP_odom_node',
         ),
+
 
         # 2. Rosbag
         TimerAction(

@@ -19,9 +19,10 @@ The dataset is provided as a ROS bag and contains sensor measurements recorded d
 
 Topics included:
 
-/scan: 2D LiDAR laser scans at 5 Hz
-/imu: Gyroscope and accelerometer data at 20 Hz
-/joint_states: Wheel motor position and velocity at 20 Hz
+- **/scan**: 2D LiDAR laser scans at **5 Hz**
+- **/imu**: Gyroscope and accelerometer data at **20 Hz**
+- **/joint_states**: Wheel motor position and velocity at **20 Hz**
+
 The dataset is divided into three sequences, each representing a different environmental condition:
 
 **Sequence 00 – Empty Hallway:** A static indoor hallway environment with minimal obstacles and no dynamic objects. This sequence is intended to evaluate baseline odometry and sensor fusion performance.
@@ -100,7 +101,7 @@ $$\theta_{t+1} = \theta_t + \omega \Delta t$$
     - Position_wheel_odom_node.py
     - Velocity_wheel_odom_node.py
 
-- Analysis: Accuracy, Drift, Robustness
+- Experiment: Perform Position-based and Velocity-based wheel odometry in all 3 sequences and analyze accuracy, drift, and robustness.
 
 ### **Result & Discussion**
 
@@ -237,25 +238,182 @@ In this case, the measurement is the yaw angle from the IMU.
 
 ### **Setup**
 
+- Data Source: Use data from the ROS bag in all 3 sequences (00, 01, 02), focusing on data from Topic /joint_states and /imu.
+
+- Implementation: Calculate wheel odometry using Velocity-based (from wheel velocity) methods as a initial guess, using wheel radius (R) = 0.033 meters and wheel base (L) = 0.16 meters. And perform EKF to improve the accuracy of the wheel odometry.
+
+- LaserScan (Raw Points) Visualization: Show the structure of the walls that the robot scans throughout the path (Point Cloud Accumulation) on rviz2.
+
+- Path Visualization: Plot the path of movement from EKF in each timestep on rviz2.
+
+- Usage: You can run this file to see the test results
+    - EKF_odom_node.py
+
+- Experiment: Perform EKF in variance of $Q$ and $R$ in all 3 sequences and analyze accuracy, drift, and robustness.
+    - Experiment 1: $Q$ = 0.000001, 0.001, 1.0, 1000.0 and $R$ = 0.1
+    - Experiment 2: $R$ = 0.0001, 0.1, 1000.0, 100000.0 and $Q$ = 0.001
+    - Choose the best $Q$ and $R$ and compare the results to Position-based and Velocity-based odometry.
+
 ### **Result & Discussion**
 
 ## **Part 2: Position improvement using ICP Scan Matching**
 
 ### **Objective**
 
+To refine the EKF-based odometry using LiDAR scan matching and evaluate the improvement in accuracy and drift.
+
 ### **Theory**
 
-### **Experiment**
+The Iterative Closest Point (ICP) algorithm is a fundamental technique for geometric registration. It refines the robot's pose by iteratively aligning a current LiDAR scan (Source) with a reference model (Target), such as a previous scan or a global map. The core objective is to minimize a defined error metric between these two data sets to achieve decimeter-level localization accuracy.
 
+Depending on the environment's structure, different error metrics can be employed:
+
+1. **Point-to-Point ICP**: This is the "classic" version of ICP. It treats the LiDAR data as a simple set of coordinates without considering the geometry of the environment.
+
+- Logic: It calculates the Euclidean distance directly between source point $p_i$ and the nearest target point $q_i$.
+
+- Error Function: $E = \sum || p_i - q_i ||^2$
+
+- Characteristics:
+
+    - Pros: Minimal computation per iteration; easy to implement.
+
+    - Cons: Struggles with "sliding" along flat walls. If the robot moves parallel to a wall, the points may pull toward each other incorrectly, leading to longitudinal drift.
+
+2. **Point-to-Plane ICP**: This version is more "geometry-aware" and is the standard for indoor mobile robotics where flat surfaces (walls) are prevalent.
+
+- Logic: Instead of pulling a point toward another point, it pulls the point toward the tangent plane (or line in 2D) of the target surface.
+
+- Error Function: $E = \sum ((p_i - q_i) \cdot n_i)^2$ (where $n_i$ is the surface normal).
+
+- Characteristics:
+
+    - Pros: Much faster convergence. It allows points to "slide" along the wall as long as they stay on the same plane, which is exactly how LiDAR scans behave on long corridors.
+
+    - Cons: Requires calculating surface normals for every point, which adds a slight initial computational cost.
+
+**ICP steps**
+
+1. Point Cloud Pre-processing:
+    - Convert raw LaserScan data (ranges and angles) into 2D Cartesian coordinates $(x, y)$.
+    - **Downsampling**: Pick every $n^{th}$ point (e.g., every 5th point) to reduce computational load while maintaining structural features.
+
+2. Initial Guess:
+    - Apply the current estimated pose from Odometry/EKF to the current scan to bring it close to the target scan.
+
+3. Nearest Neighbor Association:
+    - For each point in the current scan, find the closest point in the previous scan.
+    - Implementation Note: We use KDTree for efficient spatial searching, reducing complexity from $O(N^2)$ to $O(N \log N)$.
+    - When transitioning to Point-to-Plane, the algorithm not only finds the nearest point but also estimates the surface normal of the local neighborhood.
+
+4. Motion Estimation:
+    - Calculate the Singular Value Decomposition (SVD) to find the optimal Rotation ($R$) and Translation ($T$) that minimizes the Mean Squared Error (MSE) between the paired points. For Point-to-Plane, we transition to a Non-linear Optimizer to account for surface normals, providing better stability in structured environments
+
+5. Transformation Update:
+    - Apply the calculated $R$ and $T$ to the current point cloud.
+
+6. Iteration & Convergence:
+    - Repeat steps 3–5 until the change in error is below a threshold (EPS) or the maximum number of iterations (MAX_ITER) is reached.
+
+This implementation can be enhanced with Outlier Rejection using distance thresholds and Initial Guess Integration from EKF. These techniques ensure the ICP remains robust even in dynamic environments with moving obstacles.
+
+**Outlier Rejection Strategies in ICP**
+
+To ensure the robustness of our SLAM system, especially in dynamic or noisy environments, we implement a Multi-stage Outlier Rejection pipeline. This prevents "bad data" (like moving people or sensor noise) from distorting the robot's localization.
+
+1. **Pre-Filtering (Raw Data Cleaning)**: Filters out noise and reduces computational load before the matching process begins.
+    - Voxel Grid Filtering:
+        - Method: Divides the 2D space into small grids (Voxels) and replaces all points within a grid with their centroid.
+        - Benefit: Manages High-Density areas where overlapping points could disproportionately bias the optimization. It ensures a uniform distribution of data.
+    - Statistical Outlier Removal (SOR):
+        - Method: Calculates the mean distance of each point to its $k$-nearest neighbors. Points exceeding a global standard deviation threshold are discarded.
+        - Benefit: Effectively removes sparse noise such as dust, steam, or sensor "ghost" points.
+
+2. **Correspondence Rejection (Post-Matching Filter)**: Filters point pairs after the Nearest Neighbor search but before calculating the transformation ($R, T$).
+    - Distance Thresholding:
+        - Method: Rejects point pairs if the distance between the source and target exceeds a set limit (e.g., 0.5m).
+        - Rationale: Large distances often indicate Dynamic Objects (e.g., a person walking past) that do not exist in the reference map.
+    - Reciprocal Correspondence:
+        - Method: Validates pairs bi-directionally. Point $A$ (Source) must find Point $B$ (Target) as its closest neighbor, AND Point $B$ must also identify Point $A$ as its closest neighbor.
+        - Benefit: Eliminates "ambiguous" matches, particularly in featureless environments where a point might otherwise snap to a random distant surface.
+
+3. **Robust Estimators (Optimization-Level Filtering)**: The final layer of defense, integrated into the Step 4: Motion Estimation phase using advanced mathematics.
+    - Huber Loss Function:
+        - Concept: A hybrid loss function that adjusts how "Error" is weighted.
+            - Small Errors (Inliers): Treated quadratically ($e^2$) for high precision.
+            - Large Errors (Outliers): Treated linearly ($|e|$) to limit their influence.
+        - Outcome: Prevents Position Jumps. Even if an outlier persists, it cannot exert enough "pull" to significantly shift the robot's estimated pose.
+
+### **Setup** 
+
+Not Finish
+
+```bash
+- Data Source: Use data from the ROS bag in all 3 sequences (00, 01, 02), focusing on data from Topic /joint_states and /imu for EKF-based odometry and /scan for ICP-based odometry.
+
+- Implementation: Perform EKF-based odometry as a initial guess for ICP-based odometry.
+
+- LaserScan (Raw Points) Visualization: Show the structure of the walls that the robot scans throughout the path (Point Cloud Accumulation) on rviz2.
+
+- Path Visualization: Plot the path of movement from EKF in each timestep on rviz2.
+
+- Usage: You can run this file to see the test results
+    - EKF_odom_node.py
+
+- Experiment: Perform EKF in variance of $Q$ and $R$ in all 3 sequences and analyze accuracy, drift, and robustness.
+    - Experiment 1: $Q$ = 0.000001, 0.001, 1.0, 1000.0 and $R$ = 0.1
+    - Experiment 2: $R$ = 0.0001, 0.1, 1000.0, 100000.0 and $Q$ = 0.001
+    - Choose the best $Q$ and $R$ and compare the results to Position-based and Velocity-based odometry.
+```
 ### **Result & Discussion**
 
 ## **Part 3: Full SLAM with slam_toolbox**
 
 ### **Objective**
 
+To perform full SLAM using slam_toolbox and compare its pose estimation and mapping performance with the ICP-based odometry from Part 2.
+
 ### **Theory**
 
-### **Experiment**
+This part utilizes Slam Toolbox, a powerful 2D SLAM framework developed by Steve Macenski. It provides a comprehensive set of tools for mapping and localization, outperforming many free and commercial alternatives.
+
+**Key Features**
+
+- **Standard 2D SLAM**: Supports the "point-and-shoot" mapping workflow (start, map, and save .pgm files) with built-in utilities.
+
+- **Lifelong Mapping**: Ability to load a saved pose-graph and continue mapping while automatically removing extraneous or redundant information.
+
+- **Pose-Graph Refinement**: Refine, remap, or continue mapping from a serialized pose-graph at any time.
+
+- **Advanced Localization**: Features an optimization-based localization mode. It can also run in "LiDAR Odometry" mode without a prior map using local loop closures.
+
+- **Dual Processing Modes**: Supports both Synchronous and Asynchronous mapping modes to balance between processing all scans and maintaining real-time performance.
+
+- **Ceres Optimizer**: Powered by a new optimized plugin based on Google Ceres for high-performance graph optimization.
+
+- **Interactive Tools**: Includes an RVIZ plugin for direct interaction, allowing manual manipulation of nodes and graph connections.
+
+**Parameters**
+
+
+### **Setup**
+
+- Data Source: Use data from the ROS bag in all 3 sequences (00, 01, 02), focusing on data from Topic /scan for send to slam_toolbox.
+
+- Implementation: 
+    - Utilize the Synchronous mode to ensure that every single LaserScan message is processed and integrated into the pose-graph.
+    - Use XXX as a odometry source for slam_toolbox.
+
+- Map Visualization: Show the map from slam_toolbox using topic /map on rviz2.
+
+- Path Visualization: Plot the path of movement from slam_toolbox on rviz2.
+
+- Usage: You can run this file to see the test results
+    - SLAM_node.py
+
+- Experiment: 
+
+- Analysis: Accuracy, Drift, Robustness
 
 ### **Result & Discussion**
 

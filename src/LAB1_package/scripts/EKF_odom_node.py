@@ -34,7 +34,7 @@ class EKF_Odom_Node(Node):
         self.path_ekf_pub = self.create_publisher(Path, '/path_ekf', 10)
         
         # Path Base Frame ( Run with SLAM:'map' | Run without SLAM:'odom' )
-        self.path_base_frame = 'odom'
+        self.path_base_frame = 'map'
         
         # Creating Path
         self.path_ekf_msg = Path()

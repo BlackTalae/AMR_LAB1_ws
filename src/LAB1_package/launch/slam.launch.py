@@ -3,11 +3,33 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
+from launch.actions import ExecuteProcess, TimerAction
 
 def generate_launch_description():
+
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
+    dataset_no = 1
+    dataset_name = f"fibo_floor3_seq0{dataset_no}"
+
     return LaunchDescription([
+
+        # 3. RViz2
+        ExecuteProcess(
+            cmd=['ros2', 'run', 'rviz2', 'rviz2', '-d', '/home/talae/AMR_LAB1_ws/src/LAB1_package/config/slam_config.rviz'],
+            output='screen'
+        ),
+        
+        # 0. Rosbag
+        TimerAction(
+            period=1.0,
+            actions=[
+                ExecuteProcess(
+                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '3.0'],
+                    output='screen'
+                ),
+            ]
+        ),
 
         # 1. Wheel Odom Node
         # Node(
@@ -44,7 +66,14 @@ def generate_launch_description():
                 'odom_frame': 'odom',
                 'base_frame': 'base_link',
                 'scan_topic': '/scan',
-                'mode': 'mapping'
+                'mode': 'mapping',
+                'max_laser_range': 3.5,     # ระยะ LiDAR สูงสุดของ TurtleBot3
+                'minimum_time_interval': 0.05, 
+                'transform_publish_period': 0.02, # ความเร็วในการส่ง map -> odom1
+                'transform_timeout': 0.1,  # เพิ่มเวลารอ TF
+                # 'minimum_travel_distance': 0.1, # รอให้หุ่นขยับ 10 ซม. ค่อย Update
+                # 'minimum_travel_heading': 0.1,  # รอให้หุ่นหมุน 0.1 rad ค่อย Update
+                'do_loop_closing': True,
             }]
         )
     ])
