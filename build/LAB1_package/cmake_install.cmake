@@ -1,8 +1,8 @@
-# Install script for directory: /home/aitthikit/AMR_LAB1_ws/src/LAB1_package
+# Install script for directory: /home/talae/AMR_LAB1_ws/src/LAB1_package
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/aitthikit/AMR_LAB1_ws/install/LAB1_package")
+  set(CMAKE_INSTALL_PREFIX "/home/talae/AMR_LAB1_ws/install/LAB1_package")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,54 +43,54 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/pythonpath.sh")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/pythonpath.sh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/pythonpath.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/pythonpath.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/local/lib/python3.10/dist-packages/LAB1_package-0.0.0-py3.10.egg-info" TYPE DIRECTORY FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_python/LAB1_package/LAB1_package.egg-info/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/local/lib/python3.10/dist-packages/LAB1_package-0.0.0-py3.10.egg-info" TYPE DIRECTORY FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_python/LAB1_package/LAB1_package.egg-info/")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/local/lib/python3.10/dist-packages/LAB1_package" TYPE DIRECTORY FILES "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/LAB1_package/" REGEX "/[^/]*\\.pyc$" EXCLUDE REGEX "/\\_\\_pycache\\_\\_$" EXCLUDE)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/local/lib/python3.10/dist-packages/LAB1_package" TYPE DIRECTORY FILES "/home/talae/AMR_LAB1_ws/src/LAB1_package/LAB1_package/" REGEX "/[^/]*\\.pyc$" EXCLUDE REGEX "/\\_\\_pycache\\_\\_$" EXCLUDE)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   execute_process(
         COMMAND
         "/usr/bin/python3" "-m" "compileall"
-        "/home/aitthikit/AMR_LAB1_ws/install/LAB1_package/local/lib/python3.10/dist-packages/LAB1_package"
+        "/home/talae/AMR_LAB1_ws/install/LAB1_package/local/lib/python3.10/dist-packages/LAB1_package"
       )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/LAB1_package" TYPE PROGRAM FILES
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/scripts/dummy_script.py"
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/scripts/wheel_odom_node.py"
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/scripts/EKF_odom_node.py"
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/scripts/SLAM_node.py"
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/scripts/ICP_odom_node.py"
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/scripts/KEN_ICP_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/dummy_script.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/wheel_odom_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/EKF_odom_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/SLAM_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/ICP_odom_node.py"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/scripts/KEN_ICP_node.py"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE DIRECTORY FILES
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/dataset"
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/launch"
-    "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/config"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/launch"
+    "/home/talae/AMR_LAB1_ws/src/LAB1_package/config"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/LAB1_package")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/package_run_dependencies" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/LAB1_package")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/LAB1_package")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/parent_prefix_path" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/LAB1_package")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -98,7 +98,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/ament_prefix_path.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/ament_prefix_path.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -106,42 +106,42 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/path.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/environment" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/path.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.bash")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.bash")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.sh")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.sh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.zsh")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.zsh")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/local_setup.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/package.dsv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_environment_hooks/package.dsv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_index/share/ament_index/resource_index/packages/LAB1_package")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/packages" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_index/share/ament_index/resource_index/packages/LAB1_package")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package/cmake" TYPE FILE FILES
-    "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_core/LAB1_packageConfig.cmake"
-    "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_core/LAB1_packageConfig-version.cmake"
+    "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_core/LAB1_packageConfig.cmake"
+    "/home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_core/LAB1_packageConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/LAB1_package" TYPE FILE FILES "/home/talae/AMR_LAB1_ws/src/LAB1_package/package.xml")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -152,5 +152,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/aitthikit/AMR_LAB1_ws/build/LAB1_package/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/talae/AMR_LAB1_ws/build/LAB1_package/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

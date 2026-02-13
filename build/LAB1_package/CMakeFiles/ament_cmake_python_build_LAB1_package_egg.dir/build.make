@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aitthikit/AMR_LAB1_ws/src/LAB1_package
+CMAKE_SOURCE_DIR = /home/talae/AMR_LAB1_ws/src/LAB1_package
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aitthikit/AMR_LAB1_ws/build/LAB1_package
+CMAKE_BINARY_DIR = /home/talae/AMR_LAB1_ws/build/LAB1_package
 
 # Utility rule file for ament_cmake_python_build_LAB1_package_egg.
 
@@ -67,7 +67,7 @@ include CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/compiler_depend
 include CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/progress.make
 
 CMakeFiles/ament_cmake_python_build_LAB1_package_egg:
-	cd /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_python/LAB1_package && /usr/bin/python3 setup.py egg_info
+	cd /home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_python/LAB1_package && /usr/bin/python3 setup.py egg_info
 
 ament_cmake_python_build_LAB1_package_egg: CMakeFiles/ament_cmake_python_build_LAB1_package_egg
 ament_cmake_python_build_LAB1_package_egg: CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/clean:
 .PHONY : CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/clean
 
 CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/depend:
-	cd /home/aitthikit/AMR_LAB1_ws/build/LAB1_package && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aitthikit/AMR_LAB1_ws/src/LAB1_package /home/aitthikit/AMR_LAB1_ws/src/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/talae/AMR_LAB1_ws/build/LAB1_package && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/talae/AMR_LAB1_ws/src/LAB1_package /home/talae/AMR_LAB1_ws/src/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package/CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/depend
 

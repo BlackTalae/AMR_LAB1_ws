@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aitthikit/AMR_LAB1_ws/src/LAB1_package
+CMAKE_SOURCE_DIR = /home/talae/AMR_LAB1_ws/src/LAB1_package
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aitthikit/AMR_LAB1_ws/build/LAB1_package
+CMAKE_BINARY_DIR = /home/talae/AMR_LAB1_ws/build/LAB1_package
 
 # Utility rule file for LAB1_package_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/LAB1_package_uninstall.dir/compiler_depend.make
 include CMakeFiles/LAB1_package_uninstall.dir/progress.make
 
 CMakeFiles/LAB1_package_uninstall:
-	/usr/bin/cmake -P /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 LAB1_package_uninstall: CMakeFiles/LAB1_package_uninstall
 LAB1_package_uninstall: CMakeFiles/LAB1_package_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/LAB1_package_uninstall.dir/clean:
 .PHONY : CMakeFiles/LAB1_package_uninstall.dir/clean
 
 CMakeFiles/LAB1_package_uninstall.dir/depend:
-	cd /home/aitthikit/AMR_LAB1_ws/build/LAB1_package && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aitthikit/AMR_LAB1_ws/src/LAB1_package /home/aitthikit/AMR_LAB1_ws/src/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/CMakeFiles/LAB1_package_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/talae/AMR_LAB1_ws/build/LAB1_package && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/talae/AMR_LAB1_ws/src/LAB1_package /home/talae/AMR_LAB1_ws/src/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package/CMakeFiles/LAB1_package_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/LAB1_package_uninstall.dir/depend
 

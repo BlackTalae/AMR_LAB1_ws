@@ -9,7 +9,6 @@ Panels:
         - /Grid1
         - /Grid1/Offset1
         - /Path2
-        - /Map1
       Splitter Ratio: 0.5
     Tree Height: 719
   - Class: rviz_common/Selection
@@ -107,40 +106,6 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /path_ekf
       Value: true
-    - Alpha: 0.699999988079071
-      Class: rviz_default_plugins/Map
-      Color Scheme: map
-      Draw Behind: false
-      Enabled: true
-      Name: Map
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        Filter size: 10
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /map
-      Update Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /map_updates
-      Use Timestamp: false
-      Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: MarkerArray
-      Namespaces:
-        slam_toolbox: true
-        slam_toolbox_edges: true
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /slam_toolbox/graph_visualization
-      Value: true
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
@@ -196,11 +161,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 38.95976638793945
+      Scale: 24.759634017944336
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: 2.6437530517578125
-      Y: 0.8470277786254883
+      X: 0
+      Y: 0
     Saved: ~
 Window Geometry:
   Displays:
