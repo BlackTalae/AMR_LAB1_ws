@@ -9,23 +9,24 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
-    dataset_no = 2
+    dataset_no = 0
     dataset_name = f"fibo_floor3_seq0{dataset_no}"
+    user = "aitthikit"
 
     return LaunchDescription([
 
         # 3. RViz2
         ExecuteProcess(
-            cmd=['ros2', 'run', 'rviz2', 'rviz2', '-d', '/home/talae/AMR_LAB1_ws/src/LAB1_package/config/slam_config.rviz'],
+            cmd=['ros2', 'run', 'rviz2', 'rviz2', '-d', f'/home/{user}/AMR_LAB1_ws/src/LAB1_package/config/slam_config.rviz'],
             output='screen'
         ),
         
         # 0. Rosbag
         TimerAction(
-            period=1.0,
+            period=3.0,
             actions=[
                 ExecuteProcess(
-                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '1.0'],
+                    cmd=['ros2', 'bag', 'play', f'/home/{user}/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '1.0'],
                     output='screen'
                 ),
             ]
@@ -58,11 +59,11 @@ def generate_launch_description():
         # 4. Slam Toolbox (เรียกใช้ผ่าน Node โดยตรงเพื่อตั้งค่าพารามิเตอร์)
         Node(
             package='slam_toolbox',
-            executable='async_slam_toolbox_node',
+            executable='sync_slam_toolbox_node',
             name='slam_toolbox',
             output='screen',
             parameters=[
-                '/home/talae/AMR_LAB1_ws/src/LAB1_package/config/slam_params.yaml',
+                f'/home/{user}/AMR_LAB1_ws/src/LAB1_package/config/toolbox_params.yaml',
                 {'use_sim_time': use_sim_time}
             ]
         ),
