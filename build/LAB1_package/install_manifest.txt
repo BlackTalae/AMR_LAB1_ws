@@ -12,7 +12,6 @@
 /home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/SLAM_node.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/ICP_odom_node.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/KEN_ICP_node.py
-/home/talae/AMR_LAB1_ws/install/LAB1_package/lib/LAB1_package/cpp_node_test
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/dataset/fibo_floor3_seq00/fibo_floor3_seq00_0.db3
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/dataset/fibo_floor3_seq00/metadata.yaml
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/dataset/fibo_floor3_seq01/metadata.yaml
@@ -22,7 +21,9 @@
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/launch/slam.launch.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/launch/wheel_odom.launch.py
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/config/config.rviz
+/home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/config/ken_icp_config.rviz
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/config/slam_config.rviz
+/home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/config/slam_params.yaml
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/ament_index/resource_index/package_run_dependencies/LAB1_package
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/ament_index/resource_index/parent_prefix_path/LAB1_package
 /home/talae/AMR_LAB1_ws/install/LAB1_package/share/LAB1_package/environment/ament_prefix_path.sh

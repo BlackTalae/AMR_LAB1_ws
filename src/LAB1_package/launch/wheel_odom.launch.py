@@ -4,18 +4,18 @@ from launch.actions import ExecuteProcess, TimerAction
 
 def generate_launch_description():
 
-    dataset_no = 1
+    dataset_no = 0
     dataset_name = f"fibo_floor3_seq0{dataset_no}"
 
     return LaunchDescription([
 
         # 1. Node Wheel Odometry
-        # Node(
-        #     package='LAB1_package',
-        #     executable='wheel_odom_node.py',
-        #     name='wheel_odom_node',
-        #     parameters=[{'mode': 'velocity'}],
-        # ),
+        Node(
+            package='LAB1_package',
+            executable='wheel_odom_node.py',
+            name='wheel_odom_node',
+            parameters=[{'mode': 'position'}],
+        ),
 
         # Node(
         #     package='LAB1_package',
@@ -23,11 +23,11 @@ def generate_launch_description():
         #     name='EKF_odom_node',
         # ),
 
-        Node(
-            package='LAB1_package',
-            executable='ICP_odom_node.py',
-            name='ICP_odom_node',
-        ),
+        # Node(
+        #     package='LAB1_package',
+        #     executable='ICP_odom_node.py',
+        #     name='ICP_odom_node',
+        # ),
 
 
         # 2. Rosbag
@@ -35,7 +35,7 @@ def generate_launch_description():
             period=1.0,
             actions=[
                 ExecuteProcess(
-                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '30'],
+                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '1.0'],
                     output='screen'
                 ),
             ]

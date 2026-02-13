@@ -223,43 +223,6 @@ ament_cmake_python_build_LAB1_package_egg/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/build.make CMakeFiles/ament_cmake_python_build_LAB1_package_egg.dir/build
 .PHONY : ament_cmake_python_build_LAB1_package_egg/fast
 
-#=============================================================================
-# Target rules for targets named cpp_node_test
-
-# Build rule for target.
-cpp_node_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cpp_node_test
-.PHONY : cpp_node_test
-
-# fast build rule for target.
-cpp_node_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cpp_node_test.dir/build.make CMakeFiles/cpp_node_test.dir/build
-.PHONY : cpp_node_test/fast
-
-src/cpp_node.o: src/cpp_node.cpp.o
-.PHONY : src/cpp_node.o
-
-# target to build an object file
-src/cpp_node.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cpp_node_test.dir/build.make CMakeFiles/cpp_node_test.dir/src/cpp_node.cpp.o
-.PHONY : src/cpp_node.cpp.o
-
-src/cpp_node.i: src/cpp_node.cpp.i
-.PHONY : src/cpp_node.i
-
-# target to preprocess a source file
-src/cpp_node.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cpp_node_test.dir/build.make CMakeFiles/cpp_node_test.dir/src/cpp_node.cpp.i
-.PHONY : src/cpp_node.cpp.i
-
-src/cpp_node.s: src/cpp_node.cpp.s
-.PHONY : src/cpp_node.s
-
-# target to generate assembly for a file
-src/cpp_node.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cpp_node_test.dir/build.make CMakeFiles/cpp_node_test.dir/src/cpp_node.cpp.s
-.PHONY : src/cpp_node.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -277,10 +240,6 @@ help:
 	@echo "... ament_cmake_python_build_LAB1_package_egg"
 	@echo "... ament_cmake_python_copy_LAB1_package"
 	@echo "... uninstall"
-	@echo "... cpp_node_test"
-	@echo "... src/cpp_node.o"
-	@echo "... src/cpp_node.i"
-	@echo "... src/cpp_node.s"
 .PHONY : help
 
 
