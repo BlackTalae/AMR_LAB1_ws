@@ -4,18 +4,18 @@ from launch.actions import ExecuteProcess, TimerAction
 
 def generate_launch_description():
 
-    dataset_no = 0
+    dataset_no = 2
     dataset_name = f"fibo_floor3_seq0{dataset_no}"
 
     return LaunchDescription([
 
         # 1. Node Wheel Odometry
-        Node(
-            package='LAB1_package',
-            executable='wheel_odom_node.py',
-            name='wheel_odom_node',
-            parameters=[{'mode': 'position'}],
-        ),
+        # Node(
+        #     package='LAB1_package',
+        #     executable='wheel_odom_node.py',
+        #     name='wheel_odom_node',
+        #     parameters=[{'mode': 'position'}, {'use_sim_time': True}]
+        # ),
 
         # Node(
         #     package='LAB1_package',
@@ -23,11 +23,11 @@ def generate_launch_description():
         #     name='EKF_odom_node',
         # ),
 
-        # Node(
-        #     package='LAB1_package',
-        #     executable='ICP_odom_node.py',
-        #     name='ICP_odom_node',
-        # ),
+        Node(
+            package='LAB1_package',
+            executable='KEN_ICP_node.py',
+            name='KEN_ICP_node',
+        ),
 
 
         # 2. Rosbag

@@ -61,7 +61,9 @@ class Wheel_odom_node(Node):
         if len(msg.position) < 2 or len(msg.velocity) < 2:
             return
 
-        t_now = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
+        # t_now = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
+        t_now = self.get_clock().now().seconds_nanoseconds()[0] + \
+                      self.get_clock().now().seconds_nanoseconds()[1] * 1e-9
         if self.last_time is None:
             self.last_time = t_now
             self.last_left_pos, self.last_right_pos = msg.position[0], msg.position[1]

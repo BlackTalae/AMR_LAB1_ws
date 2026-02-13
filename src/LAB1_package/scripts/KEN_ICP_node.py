@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import JointState, Imu
@@ -21,9 +21,9 @@ from scipy.spatial import KDTree
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from src.scan import *
-from src.icp import *
-from src.EKF import EKF
+from LAB1_package.scan import *
+from LAB1_package.icp import *
+from LAB1_package.EKF import EKF
 
 class KeyFrame:
     """Store keyframe information"""
@@ -49,7 +49,7 @@ class ICPNode(Node):
         self.scan_sub = self.create_subscription(LaserScan, '/scan', self.laser_scan_callback, qos_profile)
         
         # --- Publishers ---
-        self.icp_path_pub = self.create_publisher(Path, '/robot_path', 10)
+        self.icp_path_pub = self.create_publisher(Path, '/icp_path', 10)
         self.ekf_path_pub = self.create_publisher(Path, '/ekf_path', 10)
         self.point_cloud_pub = self.create_publisher(PointCloud2, '/point_cloud', 10)
         self.current_scan_pub = self.create_publisher(PointCloud2, '/current_scan', 10)

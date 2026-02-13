@@ -1,6 +1,9 @@
 setup.py
+LAB1_package/EKF.py
 LAB1_package/__init__.py
 LAB1_package/dummy_module.py
+LAB1_package/icp.py
+LAB1_package/scan.py
 LAB1_package.egg-info/PKG-INFO
 LAB1_package.egg-info/SOURCES.txt
 LAB1_package.egg-info/dependency_links.txt

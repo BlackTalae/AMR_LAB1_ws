@@ -33,6 +33,7 @@ install(PROGRAMS
   scripts/SLAM_node.py
   scripts/ICP_odom_node.py
   scripts/KEN_ICP_node.py
+  scripts/eval_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
