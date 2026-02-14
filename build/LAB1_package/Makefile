@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/talae/AMR_LAB1_ws/src/LAB1_package
+CMAKE_SOURCE_DIR = /home/aitthikit/AMR_LAB1_ws/src/LAB1_package
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/talae/AMR_LAB1_ws/build/LAB1_package
+CMAKE_BINARY_DIR = /home/aitthikit/AMR_LAB1_ws/build/LAB1_package
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,9 +142,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/talae/AMR_LAB1_ws/build/LAB1_package/CMakeFiles /home/talae/AMR_LAB1_ws/build/LAB1_package//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/CMakeFiles /home/aitthikit/AMR_LAB1_ws/build/LAB1_package//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/talae/AMR_LAB1_ws/build/LAB1_package/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

@@ -25,11 +25,13 @@ class EvalNode(Node):
         self.wheel_poses = []
         self.ekf_poses = []
         self.icp_poses = []
+        self.slam_poses = []
         
         # Flags to track if we've received data
         self.wheel_received = False
         self.ekf_received = False
         self.icp_received = False
+        self.slam_received = False
         #
         self.plot = False
         # Wheeled only sub
@@ -38,12 +40,16 @@ class EvalNode(Node):
         
         # EKF sub
         self.ekf_sub = self.create_subscription(
-            Path, '/ekf_path', self.ekf_cb, 10)
+            Path, '/path_ekf', self.ekf_cb, 10)
         
         # ICP sub
         self.icp_sub = self.create_subscription(
             Path, '/icp_path', self.icp_cb, 10)
-        
+
+        # SLAM sub
+        self.slam_sub = self.create_subscription(
+            Path, '/slam_path', self.slam_cb, 10)
+                
         self.get_logger().info('Odometry Analyzer Node Started - collecting data...')
         self.get_logger().info('Press Ctrl+C to stop and see results')
     
@@ -62,7 +68,11 @@ class EvalNode(Node):
         if len(msg.poses) > 0:
             self.icp_poses = msg.poses
             self.icp_received = True
-        
+
+    def slam_cb(self, msg):
+        if len(msg.poses) > 0:
+            self.slam_poses = msg.poses
+            self.slam_received = True        
     
     def calculate_metrics(self, poses, name):
         """Calculate distance and heading change from initial to final pose"""
@@ -139,7 +149,13 @@ class EvalNode(Node):
             if icp_metrics:
                 results.append(icp_metrics)
                 self.print_metrics(icp_metrics)
-        
+
+        if self.slam_received:
+            slam_metrics = self.calculate_metrics(self.icp_poses, 'slam_toolbox')
+            if slam_metrics:
+                results.append(slam_metrics)
+                self.print_metrics(slam_metrics)
+
         if self.plot:
             if len(results) > 0:
                 self.plot_results(results)
@@ -193,7 +209,7 @@ class EvalNode(Node):
         
         # Plot 3: 2D Path trajectories
         ax3 = axes[1, 0]
-        colors = ['blue', 'green', 'red']
+        colors = ['blue', 'green', 'red', 'purple']
         for i, result in enumerate(results):
             if result['name'] == 'Wheel Odometry' and self.wheel_poses:
                 x = [pose.pose.position.x for pose in self.wheel_poses]
@@ -213,7 +229,13 @@ class EvalNode(Node):
                 ax3.plot(x, y, color=colors[i], label=result['name'], linewidth=2, alpha=0.7)
                 ax3.scatter(x[0], y[0], color=colors[i], s=100, marker='o', edgecolors='black', linewidths=2, zorder=5)
                 ax3.scatter(x[-1], y[-1], color=colors[i], s=100, marker='s', edgecolors='black', linewidths=2, zorder=5)
-        
+            elif result['name'] == 'slam_toolbox' and self.slam_poses:
+                x = [pose.pose.position.x for pose in self.slam_poses]
+                y = [pose.pose.position.y for pose in self.slam_poses]
+                ax3.plot(x, y, color=colors[i], label=result['name'], linewidth=2, alpha=0.7)
+                ax3.scatter(x[0], y[0], color=colors[i], s=100, marker='o', edgecolors='black', linewidths=2, zorder=5)
+                ax3.scatter(x[-1], y[-1], color=colors[i], s=100, marker='s', edgecolors='black', linewidths=2, zorder=5)
+
         ax3.set_xlabel('X Position (m)', fontsize=12)
         ax3.set_ylabel('Y Position (m)', fontsize=12)
         ax3.set_title('2D Path Trajectories', fontsize=14, fontweight='bold')

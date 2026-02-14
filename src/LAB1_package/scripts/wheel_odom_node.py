@@ -32,15 +32,17 @@ class Wheel_odom_node(Node):
         # Publisher สำหรับ Visualize LiDAR Scans
         self.scan_pub = self.create_publisher(LaserScan, '/visualize_scan', 10)
 
+        self.path_base_frame = 'map'
+        
         if self.mode in ['position', 'all']:
             self.path_p_pub = self.create_publisher(Path, '/path_position', 10)
             self.path_p_msg = Path()
-            self.path_p_msg.header.frame_id = 'odom'
+            self.path_p_msg.header.frame_id = self.path_base_frame
             
         if self.mode in ['velocity', 'all']:
             self.path_v_pub = self.create_publisher(Path, '/path_velocity', 10)
             self.path_v_msg = Path()
-            self.path_v_msg.header.frame_id = 'odom'
+            self.path_v_msg.header.frame_id = self.path_base_frame
 
         # --- Subscriptions ---
         self.create_subscription(JointState, 'joint_states', self.joint_states_callback, 10)
@@ -124,7 +126,7 @@ class Wheel_odom_node(Node):
         t.transform.translation.x, t.transform.translation.y = x, y
         t.transform.translation.z = 0.0
         t.transform.rotation = q
-        self.tf_broadcaster.sendTransform(t)
+        # self.tf_broadcaster.sendTransform(t)
 
 def main(args=None):
     rclpy.init(args=args)

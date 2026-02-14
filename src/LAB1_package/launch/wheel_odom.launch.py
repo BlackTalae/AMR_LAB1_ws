@@ -25,8 +25,8 @@ def generate_launch_description():
 
         Node(
             package='LAB1_package',
-            executable='KEN_ICP_node.py',
-            name='KEN_ICP_node',
+            executable='KEN_ICP_2_node.py',
+            name='KEN_ICP_2_node',
         ),
 
 
@@ -35,7 +35,7 @@ def generate_launch_description():
             period=1.0,
             actions=[
                 ExecuteProcess(
-                    cmd=['ros2', 'bag', 'play', '/home/talae/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '1.0'],
+                    cmd=['ros2', 'bag', 'play', '/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/dataset/' + dataset_name + '/', '--rate', '1.0'],
                     output='screen'
                 ),
             ]
@@ -43,7 +43,7 @@ def generate_launch_description():
         
         # 3. RViz2
         ExecuteProcess(
-            cmd=['ros2', 'run', 'rviz2', 'rviz2', '-d', '/home/talae/AMR_LAB1_ws/src/LAB1_package/config/config.rviz'],
+            cmd=['ros2', 'run', 'rviz2', 'rviz2', '-d', '/home/aitthikit/AMR_LAB1_ws/src/LAB1_package/config/config.rviz'],
             output='screen'
         ),
     ])

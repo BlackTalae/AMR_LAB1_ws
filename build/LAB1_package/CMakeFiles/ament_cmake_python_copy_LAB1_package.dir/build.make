@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/talae/AMR_LAB1_ws/src/LAB1_package
+CMAKE_SOURCE_DIR = /home/aitthikit/AMR_LAB1_ws/src/LAB1_package
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/talae/AMR_LAB1_ws/build/LAB1_package
+CMAKE_BINARY_DIR = /home/aitthikit/AMR_LAB1_ws/build/LAB1_package
 
 # Utility rule file for ament_cmake_python_copy_LAB1_package.
 
@@ -67,7 +67,7 @@ include CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/compiler_depend.make
 include CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/progress.make
 
 CMakeFiles/ament_cmake_python_copy_LAB1_package:
-	/usr/bin/cmake -E copy_directory /home/talae/AMR_LAB1_ws/src/LAB1_package/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package/ament_cmake_python/LAB1_package/LAB1_package
+	/usr/bin/cmake -E copy_directory /home/aitthikit/AMR_LAB1_ws/src/LAB1_package/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/ament_cmake_python/LAB1_package/LAB1_package
 
 ament_cmake_python_copy_LAB1_package: CMakeFiles/ament_cmake_python_copy_LAB1_package
 ament_cmake_python_copy_LAB1_package: CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/clean:
 .PHONY : CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/clean
 
 CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/depend:
-	cd /home/talae/AMR_LAB1_ws/build/LAB1_package && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/talae/AMR_LAB1_ws/src/LAB1_package /home/talae/AMR_LAB1_ws/src/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package /home/talae/AMR_LAB1_ws/build/LAB1_package/CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/aitthikit/AMR_LAB1_ws/build/LAB1_package && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aitthikit/AMR_LAB1_ws/src/LAB1_package /home/aitthikit/AMR_LAB1_ws/src/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package /home/aitthikit/AMR_LAB1_ws/build/LAB1_package/CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ament_cmake_python_copy_LAB1_package.dir/depend
 
